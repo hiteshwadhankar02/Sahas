@@ -16,7 +16,7 @@ import img13 from './images/PavyaAndSiddhi.png'
 import { Link } from 'react-router-dom'
 import Navigate_Context from '../Context/Navigate_Context';
 
-
+import arrow from './images/arrow.png'
 
 import slide1 from './images/Slides/gallery_grp.png'
 import slide2 from './images/Slides/gallery_grp1.png'
@@ -24,7 +24,7 @@ import slide3 from './images/Slides/club_carosel1.jpeg'
 import slide4 from './images/Slides/womes_cricket.png'
 
 
-import Loader from 'react-loader-spinner';
+// import Loader from 'react-loader-spinner';
 // import { Loader } from 'react-loader-spinner';
 
 
@@ -42,7 +42,7 @@ const style = {
     p: 4,
   };
 
-export default function Home({dbpath, loading}) {
+export default function Home({dbpath}) {
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -103,20 +103,59 @@ export default function Home({dbpath, loading}) {
         setCurrentSlide(slideNumber);
     };
 
+
+
+    const [currentOffset, setCurrentOffset] = useState(0);
+  const windowSize = 3;
+  const paginationFactor = 220;
+  const items = [
+    { name: 'Kin Khao', tag: ["Thai"] },
+    { name: 'Jū-Ni', tag: ["Sushi", "Japanese", "$$$$"] },
+    { name: 'Delfina', tag: ["Pizza", "Casual"] },
+    { name: 'San Tung', tag: ["Chinese", "$$"] },
+    { name: 'Anchor Oyster Bar', tag: ["Seafood", "Cioppino"] },
+    { name: 'Locanda', tag: ["Italian"] },
+    { name: 'Garden Creamery', tag: ["Ice cream"] },
+  ];
+
+  const atEndOfList = currentOffset <= (paginationFactor * -1) * (items.length - windowSize);
+  const atHeadOfList = currentOffset === 0;
+
+  const moveCarousel = (direction) => {
+    if (direction === 1 && !atEndOfList) {
+      setCurrentOffset(prevOffset => prevOffset - paginationFactor);
+    } else if (direction === -1 && !atHeadOfList) {
+      setCurrentOffset(prevOffset => prevOffset + paginationFactor);
+    }
+  };
+
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!atEndOfList) {
+        setCurrentOffset(prevOffset => prevOffset - paginationFactor);
+      } else {
+        setCurrentOffset(0);
+      }
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [currentOffset]);
+
   return (
     <>     
 
     <div>
-        {loading && <Loader_Spinner type="Puff" color="#00BFFF" height={100} width={100}>
+        {/* {loading && <Loader_Spinner type="Puff" color="#00BFFF" height={100} width={100}>
         <div class="newtons-cradle">
             <div class="newtons-cradle__dot"></div>
             <div class="newtons-cradle__dot"></div>
             <div class="newtons-cradle__dot"></div>
             <div class="newtons-cradle__dot"></div>
         </div>
-        </Loader_Spinner>} 
+        </Loader_Spinner>}  */}
         
-        {!loading && <div>
+       
 
 
     {/* {open && <ModalContainer style={{position:'absolute', zIndex:'22', top:'0', left:'50%', height:'200px', width:'200px',border:'5px solid red'}}>
@@ -167,7 +206,7 @@ export default function Home({dbpath, loading}) {
 
 
     <!-- About Start --> */}
-    <div class="container-fluid p-5" style={{boxShadow:'0px 1px 48px -8px rgba(0,0,0,0.27)'}} id='aboutid'>
+    <div class="container-fluid p-3" style={{boxShadow:'0px 1px 48px -8px rgba(0,0,0,0.27)', overflowX:'hidden'}} id='aboutid'>
         <div class="row gx-5">
             {/* <div class="col-lg-5 mb-5 mb-lg-0" style={{minHeight: '500px'}}>
                 <div class="position-relative h-100">
@@ -175,13 +214,18 @@ export default function Home({dbpath, loading}) {
                 </div>
             </div> */}
 
-            <div class="col-lg-5 mb-5 mb-lg-0" style={{minHeight: '500px'}}>
-            <div class="position-relative h-100">
-                <img class="position-absolute w-100 h-100 rounded img-fluid" src="img/club_img.jpg" style={{objectFit: 'cover'}}/>
-            </div>
+            <div className="col-lg-5 mb-5 mb-lg-0" style={{ minHeight: '400px' }}>
+                <div className="position-relative" style={{width:'100%', height:'100%'}}>
+                    <img
+                    className="position-absolute w-100 h-100 rounded img-fluid"
+                    src="/img/club_img.jpg" // Assuming img folder is at the root level of your project
+                    style={{}}
+                    alt="Club Image"
+                    />
+                </div>
             </div>
 
-            <div class="col-lg-7" >
+            <div class="col-lg-7" style={{padding:'25px'}} >
                 <div class="mb-4">
                     {/* <h5 class="text-primary text-uppercase">About Us</h5> */}
                     <h1 class="display-6 text-uppercase mb-0">Discover Sahas Cricket Club: Where Passion and Excellence Unite"</h1>
@@ -220,20 +264,21 @@ export default function Home({dbpath, loading}) {
     <!-- Programe Start --> */}
 
 <br /><br />
-    <center><h1 class="display-5 text-uppercase mb-0">Playes Achievements</h1></center>
+    <center><h1 class="display-5 text-uppercase mb-0">Top Player Glories</h1></center>
 
     <div class="container-fluid programe position-relative px-5 mt-5" style={{marginBottom: '135px'}} id='achievements'>
         <div class="row g-5 gb-5" style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
        
             <div class="col-lg-4 col-md-6"  style={{width:'20rem', height:'22rem'}}>
-                <div class="team-item position-relative" style={{transition:'0.2s ease-in-out'}} onMouseEnter={()=> {setShow1(true)}} onMouseLeave={()=> {setShow1(false)}}>
+            <div class="team-item position-relative" style={{transition:'0.2s ease-in-out'}} onMouseEnter={()=> {setShow1(true)}} onMouseLeave={()=> {setShow1(false)}}>
                     <div class="position-relative overflow-hidden rounded">
-                        <img class="img-fluid w-100" src="img/disha_player2 (2).png " alt="" style={{height:'340px'}}/>
+                        <img class="img-fluid w-100" src="/img/disha_player2 (2).png" alt=""  style={{height:'340px'}}/>
                         
                     </div>
-                    <div class="position-absolute start-0 bottom-0 w-100 rounded-bottom text-center p-4 show_info" style={{background: 'rgba(34, 36, 41, .96)', }} >
+                    <div class="position-absolute start-0 bottom-0 w-100 rounded-bottom text-center p-4 show_info" style={{background: 'rgba(34, 36, 41, 0.96)',width:'100%' }} >
                         <h5 class="text-uppercase text-light">Disha Kasat</h5>
-                        {show1 && (<p style={{color: '#989898', fontSize: '13.7px'}}>"The right-handed batter Disha Kasat is renowned for her remarkable consistency. Disha crushed two half-centuries while playing for India A Women in the Senior Women's One Day Challenger Trophy 2021. In Visakhapatnam, she also made an impression on everyone by smashing a century for Vidarbha Women, which ultimately proved to be the game-winning blow for her team."</p>
+                        {show1 && (<p style={{maxHeight:'244px',width:'100%', overflow:'auto', scrollbarWidth:'none'}}>
+                            "Disha Kasat, a right-handed batter from Amravati, Maharashtra, has etched her name in cricket's annals with her remarkable consistency. Her journey is a testament to perseverance and talent, highlighted by two impressive half-centuries for India A Women in the Senior Women's One Day Challenger Trophy 2021. Disha's century for Vidarbha Women in Visakhapatnam was not only a display of skill but also a match-winning performance. Selected for the Central Zone team in the Senior Women Inter-Zonal T20 and by the Royal Challengers Bangalore in the WPL, Disha's rise is a testament to her potential. She symbolizes the power of dedication and hard work in achieving one's dreams."</p>
                        )}
                     </div>
                 </div>
@@ -482,16 +527,15 @@ export default function Home({dbpath, loading}) {
 
 
                     {/* Mentors */}
-                    <div class="text-center" >
-                        {/* <h5 class="text-primary text-uppercase">Class Schedule</h5> */}
+                    {/* <div class="text-center" style={{margin:'50px 0'}}>
                         <h1 class=" text-black display-5 text-uppercase mb-0">Mentors</h1>
                     </div>
-                    <div class="row g-3" style={{display:'flex', justifyContent: 'center', marginBottom:'0'}}>
+                    <div class="row g-3" style={{display:'flex', justifyContent: 'center', marginBottom:'0'}}> */}
 
 
-                    <Ys>                        
-                    <div>
-                            {/* <!-- <h1>CARDS</h1> --> */}
+                    {/* <Ys>                        
+                    <div >
+                            
                             <div className="parent">
                             <div className="container" >
                             <div className="cards" style={{boxShadow:'9px 10px 14px -8px rgba(0,0,0,0.4)'}}>
@@ -504,9 +548,7 @@ export default function Home({dbpath, loading}) {
                                 Ex- Cricker & Entrepreneur
                                 </p>
                                 </div>
-                                {/* <div className="card-footer">
-                                <button>Read More</button>
-                                </div> */}
+                              
                             </div>
                             </div>
 
@@ -521,9 +563,7 @@ export default function Home({dbpath, loading}) {
                                         Ranji Player <br /> Owner Masterstroke sports
                                         </p>
                                         </div>
-                                        {/* <div className="card-footer">
-                                        <button>Read More</button>
-                                        </div> */}
+                                        
                                     </div>
                                 </div>
 
@@ -538,13 +578,11 @@ export default function Home({dbpath, loading}) {
                                     Ex VCA Player, <br /> Represented VCA in all age groups
                                     </p>
                                     </div>
-                                    {/* <div className="card-footer">
-                                    <button>Read More</button>
-                                    </div> */}
+                                   
                                 </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
 
 
 
@@ -574,7 +612,7 @@ export default function Home({dbpath, loading}) {
                             
                         </div>
                         </div> */}
-                    </Ys>
+                    {/* </Ys> */}
 
                         {/* <div class="col-lg-3 col-md-4 col-sm-6">
                                 <div class=" rounded text-center py-1 px-3">
@@ -637,7 +675,7 @@ export default function Home({dbpath, loading}) {
                     </div>
                 </div>
             </div>
-        </div>
+        {/* </div> */}
         {/* <section style={spikesStyle}>
             <div style={spikesAfterStyle}></div>
         </section> */}
@@ -671,7 +709,7 @@ export default function Home({dbpath, loading}) {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-4 mb-4" 
-                            style={{ transition: 'transform 0.3s', transform: isHovered ? 'scale(1.05)' : 'scale(1)' }} 
+                            style={{ transition: 'transform 0.3s', transform: isHovered ? 'scale(1.03)' : 'scale(1)' }} 
                             onMouseEnter={() => setIsHovered(true)} 
                             onMouseLeave={() => setIsHovered(false)}>
                             <div className="card">
@@ -685,7 +723,7 @@ export default function Home({dbpath, loading}) {
                             </div>
                         </div>
 
-                        <div className="col-md-4 mb-4" style={{ transition: 'transform 0.3s', transform: isHovered1 ? 'scale(1.05)' : 'scale(1)' }} 
+                        <div className="col-md-4 mb-4" style={{ transition: 'transform 0.3s', transform: isHovered1 ? 'scale(1.03)' : 'scale(1)' }} 
                             onMouseEnter={() => setIsHovered1(true)} 
                             onMouseLeave={() => setIsHovered1(false)}>
                             <div className="card">
@@ -698,7 +736,7 @@ export default function Home({dbpath, loading}) {
                             </div>
                             </div>
                         </div>
-                        <div className="col-md-4 mb-4" style={{ transition: 'transform 0.3s', transform: isHovered2 ? 'scale(1.05)' : 'scale(1)' }} 
+                        <div className="col-md-4 mb-4" style={{ transition: 'transform 0.3s', transform: isHovered2 ? 'scale(1.03)' : 'scale(1)' }} 
                             onMouseEnter={() => setIsHovered2(true)} 
                             onMouseLeave={() => setIsHovered2(false)}>
                             <div className="card">
@@ -736,10 +774,15 @@ export default function Home({dbpath, loading}) {
 
 
                         
-                    <div class="mb-5 text-center" style={{marginTop: '50px'}} id='gallery'>
+                    <div class="container mb-5 text-left" style={{marginTop: '10px'}} id='gallery'>
+                    <br />
                     <br />
                         {/* <h5 class="text-primary text-uppercase">Class Schedule</h5> */}
-                        {/* <h1 class="display-5 text-uppercase mb-0">Gallery</h1> */}
+                        <GalleryHead style={{width:'250px'}}><h1 class="display-5  mb-0">Our <span style={{color:'#fb5b21'}}>Gallery</span></h1>
+                            <div></div>
+                            
+                        </GalleryHead>
+                        
                     </div>
                         {/* <div>
                             <div className="container" style={{display: 'flex', flexDirection: 'column', justifyContent:'center', alignItems:'center', gap:'7px'}}>
@@ -832,7 +875,7 @@ export default function Home({dbpath, loading}) {
                                 </div>
                         </Gallery_Container> */}
 
-                        <Gallery_Container>
+                        {/* <Gallery_Container>
                         <div className="gallery">
                             <div className="gallery__item gallery__item--hor">
                             <img src={img5} alt="" />
@@ -865,7 +908,7 @@ export default function Home({dbpath, loading}) {
                             <img src={img11} alt="" />
                             </div>
                         </div>
-                        </Gallery_Container>
+                        </Gallery_Container> */}
 
                         
 
@@ -1095,7 +1138,7 @@ export default function Home({dbpath, loading}) {
             </div>
         </div>
     </div> */}
-    <br /><br /><br />
+
                         {/* <section className='container-fluid' style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
                         
                         <div className="col-md-6" >
@@ -1113,64 +1156,60 @@ export default function Home({dbpath, loading}) {
                             </div>
                         </div>
                         </section> */}
+
+
+                        <Slide_show>
+
+                            
+
+                            <div id="app">
+
+                                <div style={{display:'flex', gap:'5px', justifyContent:'end', marginRight:'5%'}}>
+                                        <button
+                                        className="card-carousel--nav__left"
+                                        onClick={() => moveCarousel(-1)}
+                                        disabled={atHeadOfList}
+                                        style={{border:'none'}}
+                                        >
+                                            <img src={arrow} alt="" />
+                                        
+                                        </button>
+                                        <button
+                                        className="card-carousel--nav__right"
+                                        onClick={() => moveCarousel(1)}
+                                        disabled={atEndOfList}
+                                        style={{border:'none'}}
+                                        >
+                                            <img src={arrow} alt="" style={{transform: 'rotate(180deg)'}}/>
+                                        </button>
+                            </div>
+                                <div className="card-carousel-wrapper">
+                                    
+                                    <div className="card-carousel">
+                                    <div className="card-carousel--overflow-container">
+                                        <div className="card-carousel-cards" style={{ transform: `translateX(${currentOffset}px)` }}>
+                                        {items.map((item, index) => (
+                                            <div className="card-carousel--card" key={index}>
+                                            <img src={img2} alt="placeholder" />
+                                            {/* <div className="card-carousel--card--footer">
+                                                <p>{item.name}</p>
+                                                {item.tag.map((tag, tagIndex) => (
+                                                <p className={tagIndex > 0 ? 'tag secondary' : 'tag'} key={tagIndex}>{tag}</p>
+                                                ))}
+                                            </div> */}
+                                            </div>
+                                        ))}
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+
+                        </Slide_show>
     <br></br><br></br>
 
 
-<Slide_show>
-    <section id="gallery">
-            <div data-am-gallery>
-                {/* hidden gallery steering */}
-                <input type="radio" name="gallery" id="img-1" defaultChecked />
-                <input type="radio" name="gallery" id="img-2" />
-                <input type="radio" name="gallery" id="img-3" />
-                <input type="radio" name="gallery" id="img-4" />
-                <input type="radio" name="gallery" id="img-5" />
 
-                {/* Images */}
-                <div className="images">
-                    {/* img 1 */}
-                    <div className="image" style={{backgroundImage: `url(${slide3})`}}>
-                        <label className="button back" htmlFor="img-5"><i className="material-symbols-outlined"><i class="fas fa-chevron-left"></i></i></label>
-                        <label className="button forward" htmlFor="img-2"><i className="material-symbols-outlined"><i class="fas fa-chevron-right"></i></i></label>
-                        {/* description */}
-                        <div id="title_cnt">
-                            <div id="title">the<br />Golden<br />Tears.</div>
-                        </div>
-                    </div>
-                    {/* img 2 */}
-                    <div className="image" style={{backgroundImage: `url(${slide1})`}}>
-                        <label className="button back" htmlFor="img-1"><i className="material-symbols-outlined"><i class="fas fa-chevron-left"></i></i></label>
-                        <label className="button forward" htmlFor="img-3"><i className="material-symbols-outlined"><i class="fas fa-chevron-right"></i></i></label>
-                    </div>
-                    {/* img 3 */}
-                    <div className="image" style={{backgroundImage: `url(${slide2})`}}>
-                        <label className="button back" htmlFor="img-2"><i className="material-symbols-outlined"><i class="fas fa-chevron-left"></i></i></label>
-                        <label className="button forward" htmlFor="img-4"><i className="material-symbols-outlined"><i class="fas fa-chevron-right"></i></i></label>
-                    </div>
-                    {/* img 4 */}
-                    <div className="image" style={{backgroundImage: `url(${slide4})`}}>
-                        <label className="button back" htmlFor="img-3"><i className="material-symbols-outlined"><i class="fas fa-chevron-left"></i></i></label>
-                        <label className="button forward" htmlFor="img-5"><i className="material-symbols-outlined"><i class="fas fa-chevron-right"></i></i></label>
-                    </div>
-                    {/* img 5 */}
-                    <div className="image" style={{backgroundImage: `url(${slide2})`}}>
-                        <label className="button back" htmlFor="img-4"><i className="material-symbols-outlined"><i class="fas fa-chevron-left"></i></i></label>
-                        <label className="button forward" htmlFor="img-1"><i className="material-symbols-outlined"><i class="fas fa-chevron-right"></i></i></label>
-                    </div>
-                </div>
-                {/* Navigation */}
-                <div className="navigation">
-                    <label className="dot" htmlFor="img-1"></label>
-                    <label className="dot" htmlFor="img-2"></label>
-                    <label className="dot" htmlFor="img-3"></label>
-                    <label className="dot" htmlFor="img-4"></label>
-                    <label className="dot" htmlFor="img-5"></label>
-                </div>
-            </div>
-        </section>
-        </Slide_show>
-
-    </div>}
     </div>
     </>
   )
@@ -1294,6 +1333,9 @@ img {
 `;
 
 const Initiatives_section = styled.div `
+.card{
+    margin: 0 20px;
+}
 `;
 
 const ModalContainer = styled.div `
@@ -1302,44 +1344,61 @@ const ModalContainer = styled.div `
 
 
 const Ys = styled.div`
-  font-family: 'open sans', sans-serif;
- display: flex;
+font-family: 'open sans', sans-serif;
+display: flex;
 justify-content: center;
 align-items: center;
 
-.parent{
+.parent {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 26px;
-  height: 100vh;
+  height: 600px;
 }
 
-.container{
+.container {
   display: flex;
+  flex-wrap: wrap; /* Allow cards to wrap to the next line */
+  justify-content: center;
 }
-.cards{
+
+.cards {
   width: 300px;
   margin: 0 10px;
   background-color: white;
   border-radius: 15px;
   transition: 0.2s;
 }
+
 .card-img img {
   width: 100%;
   border-radius: 10px 10px 0px 0px;
 }
-.card-body h5 {
 
-  text-align: center; 
-}
+.card-body h5,
 .card-body p {
   text-align: center;
-  margin-bottom: 10px;
-  /* padding: 5px; */
+  margin: 0; /* Remove default margins */
 }
 
+@media screen and (max-width: 768px) {
+  .parent {
+    flex-direction: column; /* Stack cards vertically */
+    height: auto; /* Reset height */
+  }
 
+  .container {
+    width: 100%; /* Full width */
+    justify-content: center; /* Center align cards */
+    align-items: center; /* Center align cards */
+  }
+
+  .cards {
+    width: calc(100% - 20px); /* Full width with gap */
+    margin: 10px;
+  }
+}
 
 
 /* 
@@ -1465,195 +1524,238 @@ const Loader_Spinner = styled.div `
 
 const Slide_show= styled.div `
 
-width: 100%;
-display: flex;
-justify-content: center;
-align-items: center;
-overflow: hidden;
+margin: 0 20px 50px 20px;
 
-/* google fonts */
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
-/* font-family: 'Oswald', sans-serif; */
-/* font-family: 'Libre Baskerville', serif; */
-
-/* google icons */
-@import url('https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0');
-
-/* basics */
-html {
-scrollbar-color: #926d34 transparent;
-scroll-behavior: smooth;
-overflow-x: hidden;
-}
-
+/* Style.css */
 body {
-margin: 0;
-padding: 0;
-background: #0d1017;
+  background: #f8f8f8;
+  color: #2c3e50;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
-* {
--webkit-box-sizing: border-box;
--moz-box-sizing: border-box;
-box-sizing: border-box;
+.card-carousel-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 0px;
+  color: #666a73;
 }
 
-/* sections */
-section {
-display: block;
-clear: both;
-position: relative;
-width: 100vw;
-height: 90vh;
+.card-carousel {
+  display: flex;
+  justify-content: center;
+  width: 90%;
 }
 
-.row {
-display: flex;
-padding: 3rem 10%;
-justify-content: center;
+.card-carousel--overflow-container {
+  overflow: hidden;
 }
 
-/* gallery style */
-[data-am-gallery] {
-position: relative;
-width: 100%;
-height: 100%;
+.card-carousel--nav__left,
+.card-carousel--nav__right {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card-carousel--nav__left img,
+.card-carousel--nav__right img{
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    padding: 0;
 }
 
-[data-am-gallery] input[type="radio"] {
-position: fixed;
-top: -9999px;
+.card-carousel--nav__left[disabled],
+.card-carousel--nav__right[disabled] {
+  opacity: 0.2;
 }
 
-[data-am-gallery] input[type="radio"]:checked:nth-child(5) ~ .images .image:nth-child(5) { opacity: 1; }
-[data-am-gallery] input[type="radio"]:checked:nth-child(5) ~ .navigation .dot:nth-child(5) { background-color: #fff; }
-[data-am-gallery] input[type="radio"]:checked:nth-child(5) ~ .navigation .dot:nth-child(5):hover { opacity: 1; }
+.card-carousel--nav__left {
+  /* transform: rotate(-135deg); */
+}
+/* 
+.card-carousel--nav__left:active {
+  transform: rotate(-135deg) scale(0.9);
+} */
 
-[data-am-gallery] input[type="radio"]:checked:nth-child(4) ~ .images .image:nth-child(4) { opacity: 1; }
-[data-am-gallery] input[type="radio"]:checked:nth-child(4) ~ .navigation .dot:nth-child(4) { background-color: #fff; }
-[data-am-gallery] input[type="radio"]:checked:nth-child(4) ~ .navigation .dot:nth-child(4):hover { opacity: 1; }
-
-[data-am-gallery] input[type="radio"]:checked:nth-child(3) ~ .images .image:nth-child(3) { opacity: 1; }
-[data-am-gallery] input[type="radio"]:checked:nth-child(3) ~ .navigation .dot:nth-child(3) { background-color: #fff; }
-[data-am-gallery] input[type="radio"]:checked:nth-child(3) ~ .navigation .dot:nth-child(3):hover { opacity: 1; }
-
-[data-am-gallery] input[type="radio"]:checked:nth-child(2) ~ .images .image:nth-child(2) { opacity: 1; }
-[data-am-gallery] input[type="radio"]:checked:nth-child(2) ~ .navigation .dot:nth-child(2) { background-color: #fff; }
-[data-am-gallery] input[type="radio"]:checked:nth-child(2) ~ .navigation .dot:nth-child(2):hover { opacity: 1; }
-
-[data-am-gallery] input[type="radio"]:checked:nth-child(1) ~ .images .image:nth-child(1) { opacity: 1; }
-[data-am-gallery] input[type="radio"]:checked:nth-child(1) ~ .navigation .dot:nth-child(1) { background-color: #fff; }
-[data-am-gallery] input[type="radio"]:checked:nth-child(1) ~ .navigation .dot:nth-child(1):hover { opacity: 1; }
-
-[data-am-gallery] .image {
-position: absolute;
-top: 0;
-bottom: 0;
-left: 0;
-right: 0;
-opacity: 0;
--webkit-transition: opacity .3s ease;
-transition: opacity .3s ease;
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-
-
+.card-carousel--nav__right {
+  /* transform: rotate(45deg); */
 }
 
-[data-am-gallery] .navigation {
-position: absolute;
-bottom: 1rem;
-left: 50%;
--webkit-transform: translateX(-50%);
-transform: translateX(-50%);
+/* .card-carousel--nav__right:active {
+  transform: rotate(45deg) scale(0.9);
+} */
+
+.card-carousel-cards {
+  display: flex;
+  transition: transform 150ms ease-out;
 }
 
-/* nav dots */
-[data-am-gallery] .dot {
-display: inline-block;
-width: 1rem;
-height: 1rem;
-margin: 0 .5rem;
-border-radius: 50%;
-background-color: #926d34;
-cursor: pointer;
+.card-carousel--card {
+  margin: 0 10px;
+  width: 400px;
+  height: 300px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px 0 rgba(40, 44, 53, 0.06), 0 2px 2px 0 rgba(40, 44, 53, 0.08);
+  background-color: #fff;
+  border-radius: 4px;
+  z-index: 3;
+  margin-bottom: 2px;
 }
 
-[data-am-gallery] .dot:hover {
-background-color: #fff;
+.card-carousel--card:first-child {
+  margin-left: 0;
 }
 
-/* nav buttons */
-.button {
-z-index: 9;
-cursor: pointer;
+.card-carousel--card:last-child {
+  margin-right: 0;
 }
 
-.back {
-position: absolute;
-top: 50%;
-left: 2rem;
--webkit-transform: translateY(-50%);
--ms-transform: translateY(-50%);
-transform: translateY(-50%);
+.card-carousel--card img {
+  vertical-align: bottom;
+  width: 400px;
+  height: 100%;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  transition: opacity 150ms linear;
 }
 
-.forward {
-position: absolute;
-top: 50%;
-right: 2rem;
--webkit-transform: translateY(-50%);
--ms-transform: translateY(-50%);
-transform: translateY(-50%);
+.card-carousel--card img:hover {
+  opacity: 0.5;
 }
 
-.material-symbols-outlined {
-color: #fff;
-font-size: clamp(3.5vw, 5vw, 5vw);
-font-weight: 100;
+.card-carousel--card--footer {
+  border-top: 0;
+  padding: 7px 15px;
 }
 
-.material-symbols-outlined:hover {
-color: #926d34;
+.card-carousel--card--footer p {
+  padding: 3px 0;
+  margin: 0;
+  margin-bottom: 2px;
+  font-size: 19px;
+  font-weight: 500;
+  color: #2c3e50;
 }
 
-[data-am-gallery] .dot,
-.material-symbols-outlined {
--webkit-transition: all .2s ease;
-transition: all .2s ease;
+.card-carousel--card--footer p.tag {
+  font-size: 11px;
+  font-weight: 300;
+  padding: 4px;
+  background: rgba(40, 44, 53, 0.06);
+  display: inline-block;
+  position: relative;
+  margin-left: 4px;
+  color: #666a73;
 }
 
-/* text styles */
-#title_cnt {
-text-align: left;
-position: absolute;
-top: 50%;
-left: 10rem;
--webkit-transform: translateY(-50%);
--ms-transform: translateY(-50%);
-transform: translateY(-50%);
+.card-carousel--card--footer p.tag:before {
+  content: "";
+  float: left;
+  position: absolute;
+  top: 0;
+  left: -12px;
+  width: 0;
+  height: 0;
+  /* border-color: transparent rgba(40, 44, 53, 0.06) transparent transparent;
+  border-style: solid;
+  border-width: 8px 12px 12px 0; */
 }
 
-#title {
-font-size: clamp(3.5rem, 6vw, 6vw);
-font-weight: 600;
-text-align: left;
-line-height: 1;
-font-family: 'Libre Baskerville', serif;
-color: transparent;
-background-image: linear-gradient( to right, #8f6a32 0, #cb9b51 22%, #f6e27a 45%, #f6f2c0 50%, #f6e27a 55%, #cb9b51 78%, #8f6a32 100% );
--webkit-background-clip: text;
-filter: drop-shadow(1px -1px 8px #000);
+.card-carousel--card--footer p.tag.secondary {
+  margin-left: 0;
+  /* border-left: 1.45px dashed white; */
 }
 
-section h3 {
-font-family: 'Oswald', sans-serif;
-font-size: clamp(2rem, 3vw, 3vw);
-font-weight: 100;
-color: transparent;
-background-image: linear-gradient( to right, #8f6a32 0, #cb9b51 22%, #f6e27a 45%, #f6f2c0 50%, #f6e27a 55%, #cb9b51 78%, #8f6a32 100% );
--webkit-background-clip: text;
+.card-carousel--card--footer p.tag.secondary:before {
+  display: none !important;
 }
+
+.card-carousel--card--footer p.tag:after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: -3px;
+  float: left;
+  width: 4px;
+  height: 4px;
+  border-radius: 2px;
+  background: white;
+  box-shadow: -0px -0px 0px #004977;
+}
+
+@media screen and (max-width: 768px) {
+  .card-carousel--card {
+    width: 200px;
+    height: 150px;
+  }
+
+  .card-carousel--card img {
+    width: 200px;
+    height: 100%;
+  }
+}
+
+
+`;
+
+
+const GalleryHead = styled.div `
+div{
+
+    width: 200px;
+    background: #fb5b21;
+    height: 3px;
+} @media screen and (max-width: 768px) {
+    div {
+      width: 32vw; /* Adjust width for smaller screens */
+    }
+  }
+`;
+
+
+const Card = styled.div `
+.card {
+  width: 20rem;
+  height: 21rem;
+  perspective: 1000px;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.999s;
+}
+
+.card:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 10px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-front {
+  transform: rotateY(0deg);
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
 `;

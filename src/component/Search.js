@@ -172,7 +172,7 @@ console.log(type1)
 
             <div className="input-group mb-3" >
               <select className="form-select" id="inputGroupSelect01"  value={type1} onChange={(e) => setType1(e.target.value)} >
-                <option value="">Search by...</option>
+                <option value="" hidden>Search by...</option>
                 <option value="1">ID</option>
                 <option value="2">Name</option>
                 <option value="3">Number</option>

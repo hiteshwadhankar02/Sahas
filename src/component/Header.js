@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { useEffect } from 'react';
-import {Link, useNavigate} from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 
 import logo from "./images/Sahas_logo-removebg-preview.png"
 import Navigate_Context from '../Context/Navigate_Context';
@@ -38,6 +38,12 @@ useEffect(()=> {
     }
 },[navi])
 
+
+    const [active, setActive] = useState(false);
+
+    const handleActive = (isActive) => {
+        setActive(isActive);
+      };
 
 
   return (
@@ -93,12 +99,11 @@ useEffect(()=> {
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                        <Link  to="/" class="nav-item nav-link active" >Home</Link>
-                            <Link to={'/AboutUs'} class="nav-item nav-link">About</Link>
-                        
-                            <Link class="nav-item nav-link" onClick={doTrainers}>Trainers</Link>
-                            <Link to={'/Gallery'} class="nav-item nav-link" >Gallery</Link>
-                            <Link to={'/ContactUs'} class="nav-item nav-link">Contact</Link>
+                            <NavLink to={'/'} className={`nav-item nav-link `} activeClassName="active" >Home</NavLink>
+                            <NavLink to={'/AboutUs'} className={`nav-item nav-link `} activeClassName="active" >About</NavLink>
+                            <Link className="nav-item nav-link" onClick={doTrainers} >Trainers</Link>
+                            <NavLink to={'/Gallery'} className={`nav-item nav-link `} activeClassName="active" >Gallery</NavLink>
+                            <NavLink to={'/ContactUs'} className="nav-item nav-link" activeClassName="active" >Contact</NavLink>
                         </div>
                         <div style={{display:'flex', gap:'10px'}}>
                             

@@ -80,6 +80,7 @@ export default function RegisterCoach({dbpath, setBtnstatus}) {
       const generatedOtp = sendOtpEmail(email);
       setRealOtp(generatedOtp);
       setOtpSent(true);
+      alert("OTP Sent Successfully !!!");
     }
     else{
       alert('Invalid Mail ID');

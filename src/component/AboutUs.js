@@ -120,6 +120,12 @@ const AboutUs = () => {
         </div>
         </div>
 
+
+
+
+        <center style={{margin:'30px 0'}}> <h3 style={{}}>Our Mentors</h3> </center>
+
+
         <Card>
         {/* <p>𝓣𝔂𝓹𝓮 𝓼𝓸𝓶𝓮𝓽𝓱𝓲𝓷𝓰 𝓽𝓸 𝓼𝓽𝓪𝓻𝓽</p> */}
         <div className="card">
@@ -127,8 +133,8 @@ const AboutUs = () => {
             <div className="card-avatar">
               <img src='img/mentor.png' alt='' className="image-icon img-fluid" style={{width:'100%', height:'100%',}}/>
             </div>
-            <div className="card-title">DHANANJAY BARDE</div>
-            <div className="card-subtitle">EX- VCA Plyaer ( VCA ACADEMY )</div>
+            <div className="card-title">Abhishek Mishra</div>
+            <div className="card-subtitle">Ex- Cricker & Entrepreneur</div>
           </div>
         </div>
         <div className="card">
@@ -136,8 +142,8 @@ const AboutUs = () => {
             <div className="card-avatar">
             <img src='img/mentor.png' alt='' className="image-icon img-fluid" style={{width:'100%', height:'100%',}}/>
             </div>
-            <div className="card-title">DHANANJAY BARDE</div>
-            <div className="card-subtitle">EX- VCA Plyaer ( VCA ACADEMY )</div>
+            <div className="card-title">Abhishek Chaurasia</div>
+            <div className="card-subtitle text-center">Ranji Player <br /> Owner Masterstroke sports</div>
           </div>
         </div>
         <div className="card">
@@ -145,8 +151,8 @@ const AboutUs = () => {
             <div className="card-avatar">
             <img src='img/mentor.png' alt='' className="image-icon img-fluid" style={{width:'100%', height:'100%',}}/>
             </div>
-            <div className="card-title">DHANANJAY BARDE</div>
-            <div className="card-subtitle">EX- VCA Plyaer ( VCA ACADEMY )</div>
+            <div className="card-title">Bhushan Talmale</div>
+            <div className="card-subtitle text-center">Ex VCA Player, <br /> Represented VCA in all age groups</div>
           </div>
         </div>
         </Card>
@@ -452,4 +458,18 @@ display: flex;
     max-width: none;
 } */
 
+`;
+
+
+const GalleryHead = styled.div `
+div{
+
+    width: 200px;
+    background: #fb5b21;
+    height: 3px;
+} @media screen and (max-width: 768px) {
+    div {
+      width: 32vw; /* Adjust width for smaller screens */
+    }
+  }
 `;

@@ -14,6 +14,8 @@ import img10 from './Hero Gallery/sahas10.jpg'
 import img11 from './Hero Gallery/sahas11.jpg'
 import img12 from './Hero Gallery/sahas12.jpg'
 
+import vid1 from './Videos/sahas_vid.mp4'
+
 const Gallery = () => {
 
 
@@ -21,7 +23,10 @@ const Gallery = () => {
     const radioImageMap = {
       check1: [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12],
       check2: [img5, img7, img9],
-      check3: [img1, img3, img4]
+      check3: [vid1, img1, img3, img4]
+    };
+    const radioVideoMap = {
+      check3: [vid1, vid1, vid1, vid1]
     };
 
     const handleRadioChange = (event) => {
@@ -47,17 +52,29 @@ const Gallery = () => {
         <div className="top-content">
           <h3>Photos Gallery</h3>
 
-                <label htmlFor="check1">All Photos</label>
-                <label htmlFor="check2">Newspaper Highlights</label>
-                <label htmlFor="check3">Videos</label>
+                <label htmlFor="check1" className={selectedRadio === 'check1' ? 'active' : ''}>All Photos</label>
+                <label htmlFor="check2" className={selectedRadio === 'check2' ? 'active' : ''}>Newspaper Highlights</label>
+                <label htmlFor="check3" className={selectedRadio === 'check3' ? 'active' : ''}>Videos</label>
         </div>
 
         <div className="photo-gallery">
-            {radioImageMap[selectedRadio].map((img, index) => (
-              <div className="pic" key={index} style={{boxShadow:' -11px 14px 11px -9px rgba(0,0,0,0.29)'}}>
+            {['check1', 'check2'].includes(selectedRadio) && radioImageMap[selectedRadio].map((img, index) => (
+            <div className="pic" key={index} style={{ boxShadow:' -11px 14px 11px -9px rgba(0,0,0,0.29)', borderRadius:'7px', border:'1px solid gray' }}>
                 <img src={img} alt={`sahas${index + 1}`} />
+            </div>
+            ))}
+
+            {radioImageMap[selectedRadio] === 'check3'  && radioImageMap[selectedRadio].map((vid, index) => (
+              <div className="pic" key={index} style={{boxShadow:' -11px 14px 11px -9px rgba(0,0,0,0.29)', borderRadius:'7px', border:'1px solid gray'}}>
+                <video src={vid} alt={`sahas${index + 1}`} />
               </div>
             ))}
+
+            {selectedRadio === 'check3' && radioVideoMap[selectedRadio].map((vid, index) => (
+  <div className="pic" key={index} style={{ boxShadow: '-11px 14px 11px -9px rgba(0,0,0,0.29)', borderRadius: '7px', border: '1px solid gray' }}>
+  <video src={vid} alt={`sahas${index + 1}`} controls={true}  style={{width:'100%', height:'400px', objectFit:'contain'}}/>
+  </div>
+))}
           </div>
         </div>
         </div>
@@ -141,12 +158,14 @@ margin: 20px 0;
 }
 
 .pic img {
-  width: 100%;
-  height: 400px; /* Maintain aspect ratio */
-  object-fit: contain;
+    width: 100%;
+    height: 400px; /* Maintain aspect ratio */
+    object-fit: contain;
 }
 
-
+.active{
+    color: #fb5b21;
+}
 
 input {
     display: none;
@@ -211,6 +230,9 @@ label {
     color: gray;
     cursor: pointer;
     transition: color 0.5s;
+    display: flex;
+    align-items: center;
+    /* white-space: nowrap;  */
 }
 
 label:hover {
@@ -230,6 +252,8 @@ label:hover {
     
     label {
         font-size: 13px;
+        margin: 5px; /* Adjust margin for smaller screens */
+        line-height: normal; 
     }
 }
 

@@ -65,9 +65,9 @@ useEffect(()=> {
                         <h4 class="text-uppercase text-light mb-4">Quick Links</h4>
                         <div class="d-flex flex-column justify-content-start">
                             <Link to={'/'} class="text-secondary mb-2"  ><i class="bi bi-arrow-right text-primary me-2"></i>Home</Link>
-                            <Link class="text-secondary mb-2"  onClick={doabout}><i class="bi bi-arrow-right text-primary me-2"></i>About Us</Link>
+                            <Link to={'/AboutUs'} class="text-secondary mb-2"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</Link>
                             <Link to={'/ContactUs'} class="text-secondary mb-2"  ><i class="bi bi-arrow-right text-primary me-2"></i>Contact us</Link>
-                            <Link class="text-secondary mb-2" onClick={doGallery}><i class="bi bi-arrow-right text-primary me-2"></i>Gallery</Link>
+                            <Link to={'/Gallery'} class="text-secondary mb-2" ><i class="bi bi-arrow-right text-primary me-2"></i>Gallery</Link>
                             {/* <a class="text-secondary mb-2" ><i class="bi bi-arrow-right text-primary me-2"></i>Latest Blog</a> */}
                             <Link class="text-secondary" ><i class="bi bi-arrow-right text-primary me-2"></i>Schedule</Link>
                         </div>
